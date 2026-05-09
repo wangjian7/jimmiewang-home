@@ -1,5 +1,6 @@
 "use client";
 
+import type { CSSProperties } from "react";
 import { useEffect, useMemo, useState } from "react";
 import styles from "./page.module.css";
 
@@ -221,19 +222,37 @@ export default function Home() {
     styles.orbitTone3,
     styles.orbitTone4,
   ];
+  const durationRange = useMemo(() => {
+    const durations = experiences.map((item) => item.durationYears);
+
+    return {
+      min: Math.min(...durations),
+      max: Math.max(...durations),
+    };
+  }, []);
 
   const formatCompanyMeta = (company: string, location: string) => {
     return location ? `${company} · ${location}` : company;
   };
 
-  const getOrbSizeClass = (durationYears: number) => {
-    if (durationYears >= 3) {
-      return styles.orbitLarge;
+  const getOrbSizeStyle = (durationYears: number): CSSProperties => {
+    const { min, max } = durationRange;
+
+    if (max === min) {
+      return {
+        "--orb-size": "132px",
+        "--orb-size-mobile": "102px",
+      } as CSSProperties;
     }
-    if (durationYears >= 2.2) {
-      return styles.orbitMedium;
-    }
-    return styles.orbitSmall;
+
+    const ratio = (durationYears - min) / (max - min);
+    const desktopSize = 88 + ratio * 104;
+    const mobileSize = 74 + ratio * 72;
+
+    return {
+      "--orb-size": `${desktopSize.toFixed(1)}px`,
+      "--orb-size-mobile": `${mobileSize.toFixed(1)}px`,
+    } as CSSProperties;
   };
 
   return (
@@ -281,8 +300,7 @@ export default function Home() {
                 <h1 className={styles.title}>Jimmie&apos;s Ledger</h1>
               </div>
               <p className={styles.lead}>
-                Personal profile for Jimmie Wang, shaped as a minimalist grid. Every role sits on a disciplined
-                horizontal rhythm, while the bottom ruler tracks your current year focus in real time.
+                A quiet record of systems, scale, and long-range technical work. Precise on time. Light on noise.
               </p>
             </section>
 
@@ -313,6 +331,7 @@ export default function Home() {
                 </article>
               ))}
             </section>
+            <div className={styles.scrollTail} aria-hidden="true" />
           </>
         ) : (
           <section className={styles.astralLayout} aria-label="Astral voyager experience map">
@@ -321,8 +340,7 @@ export default function Home() {
                 <p className={styles.astralSystem}>System.04 // Dream Matrix</p>
                 <h1 className={styles.astralHeading}>Astral voyager</h1>
                 <p className={styles.astralLead}>
-                  Your career history is translated into an explorable star map. Each glowing orb scales with tenure,
-                  and selecting a node opens a refined glass-panel profile on the right.
+                  A darker ledger of systems, gravity, and signal. Tenure becomes mass. Motion stays precise.
                 </p>
               </div>
 
@@ -337,11 +355,10 @@ export default function Home() {
                 <div key={item.id}>
                   <button
                     type="button"
-                    className={`${styles.orbitNode} ${orbitPositionClasses[index]} ${getOrbSizeClass(
-                      item.durationYears,
-                    )} ${orbitToneClasses[index]} ${
+                    className={`${styles.orbitNode} ${orbitPositionClasses[index]} ${orbitToneClasses[index]} ${
                       selectedExperience.id === item.id ? styles.orbitNodeActive : ""
                     }`}
+                    style={getOrbSizeStyle(item.durationYears)}
                     onClick={() => setSelectedExperienceId(item.id)}
                     aria-label={`Open ${item.role} details`}
                   >
@@ -400,14 +417,41 @@ export default function Home() {
                 <p className={styles.rulerLabel}>EXPERIENCE</p>
                 <p className={styles.activeYear}>{activeYear}</p>
               </div>
-              <div className={styles.stats}>
-                {stats.map((stat) => (
-                  <div key={stat.label} className={styles.stat}>
-                    <strong>{stat.value}</strong>
-                    <span>{stat.label}</span>
+                <div className={styles.rulerControls}>
+                  <div className={styles.stats}>
+                    {stats.map((stat) => (
+                      <div key={stat.label} className={styles.stat}>
+                        <strong>{stat.value}</strong>
+                        <span>{stat.label}</span>
+                      </div>
+                    ))}
                   </div>
-                ))}
-              </div>
+                  <div className={styles.rulerActions} aria-label="Quick actions">
+                    <a
+                      className={styles.actionButton}
+                      href="mailto:hi@jimmiewang.com?subject=Jimmie%27s%20Ledger"
+                      aria-label="Send email"
+                      title="Send email"
+                    >
+                      <svg viewBox="0 0 24 24" aria-hidden="true">
+                        <path d="M4 6.75h16a.75.75 0 0 1 .75.75v9a1.5 1.5 0 0 1-1.5 1.5h-14.5a1.5 1.5 0 0 1-1.5-1.5v-9A.75.75 0 0 1 4 6.75Z" />
+                        <path d="m4.5 7.5 7.02 5.27a.8.8 0 0 0 .96 0L19.5 7.5" />
+                      </svg>
+                    </a>
+                    <button
+                      type="button"
+                      className={`${styles.actionButton} ${styles.actionButtonPrimary}`}
+                      onClick={() => window.print()}
+                      aria-label="Download as PDF"
+                      title="Download as PDF"
+                    >
+                      <svg viewBox="0 0 24 24" aria-hidden="true">
+                        <path d="M12 4.5a.75.75 0 0 1 .75.75v7.19l2.47-2.47a.75.75 0 1 1 1.06 1.06l-3.75 3.75a.75.75 0 0 1-1.06 0l-3.75-3.75a.75.75 0 0 1 1.06-1.06l2.47 2.47V5.25A.75.75 0 0 1 12 4.5Z" />
+                        <path d="M5.25 15.75A.75.75 0 0 1 6 16.5v1.25c0 .14.11.25.25.25h11.5c.14 0 .25-.11.25-.25V16.5a.75.75 0 0 1 1.5 0v1.25a1.75 1.75 0 0 1-1.75 1.75H6.25A1.75 1.75 0 0 1 4.5 17.75V16.5a.75.75 0 0 1 .75-.75Z" />
+                      </svg>
+                    </button>
+                  </div>
+                </div>
             </div>
 
             <div className={styles.scale}>

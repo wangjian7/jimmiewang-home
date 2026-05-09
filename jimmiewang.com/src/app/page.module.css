@@ -144,6 +144,10 @@
   width: 100%;
 }
 
+.scrollTail {
+  height: clamp(160px, 24vh, 260px);
+}
+
 .row {
   display: grid;
   grid-template-columns: 120px 280px minmax(0, 1fr);
@@ -204,20 +208,20 @@
 
 .scope {
   margin-top: 12px;
-  line-height: 1.2;
+  line-height: 1.6;
 }
 
 .contentCell {
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 8px;
 }
 
 .summary {
   max-width: 880px;
   color: #4b4339;
   font-size: 11px;
-  line-height: 1.2;
+  line-height: 1.55;
   letter-spacing: 0;
 }
 
@@ -228,7 +232,7 @@
   background: rgba(212, 184, 114, 0.24);
   color: #7d6227;
   font-size: 10px;
-  line-height: 1.2;
+  line-height: 1.5;
   letter-spacing: 0;
 }
 
@@ -281,6 +285,68 @@
   display: flex;
   align-items: flex-start;
   gap: 28px;
+}
+
+.rulerControls {
+  display: flex;
+  align-items: flex-start;
+  gap: 18px;
+}
+
+.rulerActions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.actionButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border: 1px solid rgba(191, 138, 43, 0.14);
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.46);
+  color: #8a7a63;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.55);
+  transition:
+    transform 180ms ease,
+    background 180ms ease,
+    border-color 180ms ease,
+    color 180ms ease;
+}
+
+.actionButton:hover {
+  transform: translateY(-1px);
+  border-color: rgba(191, 138, 43, 0.28);
+  background: rgba(255, 255, 255, 0.7);
+  color: #6f5d43;
+}
+
+.actionButton svg {
+  width: 16px;
+  height: 16px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.actionButtonPrimary {
+  border-color: rgba(191, 138, 43, 0.42);
+  background: #bf8a2b;
+  color: #fff9ef;
+  box-shadow:
+    0 12px 24px rgba(191, 138, 43, 0.16),
+    inset 0 1px 0 rgba(255, 255, 255, 0.22);
+}
+
+.actionButtonPrimary:hover {
+  border-color: rgba(191, 138, 43, 0.5);
+  background: #c89438;
+  color: #fff9ef;
 }
 
 .stat {
@@ -528,10 +594,14 @@
 }
 
 .orbitNode {
+  --orb-size: 120px;
+  --orb-size-mobile: 96px;
   position: absolute;
   z-index: 2;
   display: grid;
   place-items: center;
+  width: var(--orb-size);
+  height: var(--orb-size);
   border: 0;
   border-radius: 999px;
   background: transparent;
@@ -557,21 +627,6 @@
   border-radius: 999px;
   background: rgba(228, 245, 255, 0.84);
   filter: blur(0.2px);
-}
-
-.orbitLarge {
-  width: 176px;
-  height: 176px;
-}
-
-.orbitMedium {
-  width: 132px;
-  height: 132px;
-}
-
-.orbitSmall {
-  width: 92px;
-  height: 92px;
 }
 
 .orbitTone0 {
@@ -864,6 +919,20 @@
     gap: 18px;
   }
 
+  .rulerControls {
+    gap: 12px;
+  }
+
+  .rulerActions {
+    gap: 6px;
+  }
+
+  .actionButton {
+    width: 32px;
+    height: 32px;
+    border-radius: 9px;
+  }
+
   .spacePanel {
     min-height: 700px;
     padding: 28px 20px 24px;
@@ -928,7 +997,7 @@
   .summary,
   .highlight {
     font-size: 10px;
-    line-height: 1.2;
+    line-height: 1.6;
   }
 
   .ruler {
@@ -964,19 +1033,9 @@
     min-height: 620px;
   }
 
-  .orbitLarge {
-    width: 138px;
-    height: 138px;
-  }
-
-  .orbitMedium {
-    width: 108px;
-    height: 108px;
-  }
-
-  .orbitSmall {
-    width: 78px;
-    height: 78px;
+  .orbitNode {
+    width: var(--orb-size-mobile);
+    height: var(--orb-size-mobile);
   }
 
   .orbit0 {
