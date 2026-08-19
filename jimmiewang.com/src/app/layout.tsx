@@ -14,7 +14,68 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: "Jimmie Wang | Chronicle Grid Resume",
-  description: "A minimalist timeline-based personal resume built with Next.js.",
+  description:
+    "Jimmie Wang — technology leader with 20+ years across IBM, SAP, Ant Financial, Mastercard, and NUCC. Switching and clearing systems, big data platforms, and global delivery.",
+  keywords: [
+    "Jimmie Wang",
+    "Jimmie",
+    "Wang",
+    "王健",
+    "resume",
+    "portfolio",
+    "Mastercard",
+    "Ant Financial",
+    "SAP",
+    "IBM",
+    "NUCC",
+    "payments",
+    "switching and clearing",
+  ],
+  authors: [{ name: "Jimmie Wang" }],
+  creator: "Jimmie Wang",
+  alternates: {
+    canonical: "https://jimmiewang.com",
+  },
+  openGraph: {
+    type: "profile",
+    locale: "en_US",
+    url: "https://jimmiewang.com",
+    siteName: "Jimmie Wang",
+    title: "Jimmie Wang | Chronicle Grid Resume",
+    description:
+      "Technology leader with 20+ years across IBM, SAP, Ant Financial, Mastercard, and NUCC.",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Jimmie Wang | Chronicle Grid Resume",
+    description:
+      "Technology leader with 20+ years across IBM, SAP, Ant Financial, Mastercard, and NUCC.",
+  },
+  robots: {
+    index: true,
+    follow: true,
+  },
+};
+
+const personJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Person",
+  name: "Jimmie Wang",
+  url: "https://jimmiewang.com",
+  email: "hi@jimmiewang.com",
+  jobTitle: "Technology Leader",
+  description:
+    "Technology leader with 20+ years across IBM, SAP, Ant Financial, Mastercard, and NUCC. Switching and clearing systems, big data platforms, and global delivery.",
+  worksFor: [
+    { "@type": "Organization", name: "Mastercard" },
+    { "@type": "Organization", name: "NUCC" },
+  ],
+  alumniOf: [
+    { "@type": "Organization", name: "IBM" },
+    { "@type": "Organization", name: "SAP" },
+    { "@type": "Organization", name: "Ant Financial" },
+  ],
+  sameAs: ["https://github.com/wangjian7"],
 };
 
 export default function RootLayout({
@@ -24,7 +85,13 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={`${geistSans.variable} ${geistMono.variable}`}>
-      <body suppressHydrationWarning>{children}</body>
+      <body suppressHydrationWarning>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(personJsonLd) }}
+        />
+        {children}
+      </body>
     </html>
   );
 }
