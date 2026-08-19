@@ -1,0 +1,17 @@
+# Monorepo root .gitignore
+# Sub-projects with their own .git repos (Gitea/other GitHub repos)
+atlas.jimmiewang.com/
+cardhobby.jimmiewang.com/
+cardhobby.jimmiewang.com.ui/
+cron.jimmiewang.com/
+cron.jimmiewang.com.ui/
+jimmie.wang/
+pengwenjing.com/
+trip.jimmiewang.com/
+
+# Build artifacts across all sub-projects
+**/node_modules/
+**/.next/
+**/out/
+**/dist/
+**/.DS_Store
