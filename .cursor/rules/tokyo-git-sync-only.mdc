@@ -1,0 +1,29 @@
+---
+description: cardhobby/jcron 四仓生产代码只走 git，禁止 scp 直推 Tokyo
+alwaysApply: true
+---
+
+# Tokyo 生产同步：只走 git
+
+以下四个仓库由 **git** 管理，Tokyo 生产目录在 `/Volumes/KS/repo/jimmie-home/`：
+
+- `cardhobby.jimmiewang.com`
+- `cardhobby.jimmiewang.com.ui`
+- `cron.jimmiewang.com`
+- `cron.jimmiewang.com.ui`
+
+## 必须遵守
+
+- **禁止**用 `scp` / `rsync` / 手工覆盖等方式，把本机改过的源码直接拷到 Tokyo 生产树。
+- 同步路径只能是：**本机 commit → push 远程 → Tokyo `git pull`（或等价 git 流程）**，再按需重启服务 / `db-seed`。
+- 需要在生产验证改动时：先走完 git，再在 Tokyo 操作；不要为了「快一点」绕过 git。
+
+## 原因
+
+scp 会造成 Tokyo 工作区脏文件，与后续 `git pull` 冲突或丢失改动，两边历史对不齐。
+
+## 例外（仍不算「改代码」）
+
+- 仅读日志、查进程、`db-status`、触发 job Run
+- 改本机密钥 / `.env`（本来就不进 git）
+- 用户**明确要求**用非 git 方式应急时，先说明风险再执行

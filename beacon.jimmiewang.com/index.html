@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Beacon</title>
+    <meta
+      name="description"
+      content="Jimmie Wang 的能力资产总控台原型，统一展示项目、Agent、Skill、Source、Infra、Dataset 与 Workflow。"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Manrope:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <div class="page-shell">
+      <header class="hero">
+        <nav class="topbar">
+          <div class="brand">
+            <span class="brand-kicker">Beacon</span>
+            <span class="brand-sub">jimmiewang workspace prototype</span>
+          </div>
+          <div class="topbar-actions">
+            <button type="button" class="ghost-button" data-focus-kind="project">按项目看</button>
+            <button type="button" class="ghost-button" data-focus-kind="agent">按 Agent 看</button>
+            <button type="button" class="ghost-button" data-focus-kind="source">按 Source 看</button>
+          </div>
+        </nav>
+
+        <div class="hero-grid">
+          <section class="hero-copy panel">
+            <p class="eyebrow">不是项目列表，而是能力地图</p>
+            <h1>把项目、Agent、Skill、数据源与基础设施放进同一张操作台。</h1>
+            <p class="hero-text">
+              这个原型用来回答三个问题：我已经有什么能力、哪些能力能复用、下一步该从哪里长出新的产品或自动化。
+            </p>
+            <div class="hero-badges">
+              <span>项目</span>
+              <span>Agents</span>
+              <span>Skills</span>
+              <span>Sources</span>
+              <span>Infra</span>
+              <span>Datasets</span>
+              <span>Workflows</span>
+            </div>
+          </section>
+
+          <section class="hero-metrics panel">
+            <div class="metrics-header">
+              <p>资产脉搏</p>
+              <span>最后校验：今天 15:00</span>
+            </div>
+            <div class="metrics-grid" id="metrics-grid"></div>
+          </section>
+        </div>
+
+        <section class="spotlight-strip panel">
+          <div class="spotlight-title">
+            <p>关系预览</p>
+            <span>先看一条真实能力链</span>
+          </div>
+          <div class="spotlight-flow" id="spotlight-flow"></div>
+        </section>
+      </header>
+
+      <main class="content-grid">
+        <section class="column-main">
+          <section class="insight-section">
+            <div class="section-head">
+              <div>
+                <p class="section-kicker">Today</p>
+                <h2>今日发现</h2>
+              </div>
+              <span>帮你快速发现缺口与机会</span>
+            </div>
+            <div class="insight-grid" id="insight-grid"></div>
+          </section>
+
+          <section class="map-section">
+            <div class="section-head">
+              <div>
+                <p class="section-kicker">Registry Map</p>
+                <h2>能力地图</h2>
+              </div>
+              <span>按维度切换，点击卡片查看关系</span>
+            </div>
+
+            <div class="kind-filter" id="kind-filter"></div>
+            <div class="entity-grid" id="entity-grid"></div>
+          </section>
+
+          <section class="ideas-section">
+            <div class="section-head">
+              <div>
+                <p class="section-kicker">Opportunities</p>
+                <h2>灵感与缺口</h2>
+              </div>
+              <span>把“能做什么”变成“接下来做什么”</span>
+            </div>
+
+            <div class="ideas-layout">
+              <div class="idea-list panel" id="idea-list"></div>
+              <div class="gap-list panel" id="gap-list"></div>
+            </div>
+          </section>
+        </section>
+
+        <aside class="column-side">
+          <section class="detail-panel panel">
+            <div class="detail-topline">
+              <p>Entity Focus</p>
+              <span id="detail-status"></span>
+            </div>
+            <h3 id="detail-name">trip.jimmiewang.com</h3>
+            <p class="detail-summary" id="detail-summary"></p>
+            <div class="detail-meta" id="detail-meta"></div>
+            <div class="detail-tags" id="detail-tags"></div>
+            <div class="detail-relations">
+              <div class="relation-group">
+                <p>关键关联</p>
+                <div id="detail-relations"></div>
+              </div>
+              <div class="relation-group">
+                <p>推荐动作</p>
+                <div id="detail-actions"></div>
+              </div>
+            </div>
+          </section>
+
+          <section class="mini-panel panel">
+            <div class="mini-head">
+              <p>Registry Rules</p>
+            </div>
+            <ul class="rule-list">
+              <li>一个 Source 可以服务多个 Project，不从属于单项目。</li>
+              <li>Skill 既要记录存在状态，也要记录同步状态。</li>
+              <li>Workflow 是能力链，Dataset 是能力沉淀。</li>
+              <li>高价值不是条目数量，而是复用率与可发现性。</li>
+            </ul>
+          </section>
+        </aside>
+      </main>
+    </div>
+
+    <script src="./script.js"></script>
+  </body>
+</html>
